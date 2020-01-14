@@ -1,0 +1,17 @@
+apiVersion: v2
+name: faas-flow-infra
+description: Faas-flow is a distributed function composure for OpenFaaS
+type: application
+version: 0.1.0
+keywords:
+- faas-flow
+- composure
+- openfaas
+- function
+home: https://github.com/s8sg/faas-flow\
+sources:
+- https://github.com/s8sg/faas-flow
+maintainers:
+- name: s8sg
+  email: swarvanusg@gmail.com
+

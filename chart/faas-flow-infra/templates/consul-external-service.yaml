@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-external
+spec:
+  type: {{ .Values.consul.serviceType }}
+  ports:
+    - port: 8500
+      targetPort: 8500
+      protocol: TCP
+      {{- if contains "NodePort" .Values.consul.serviceType }}
+      nodePort: {{ .Values.consul.nodePort }}
+      {{- end }}
+  selector:
+    app: consul

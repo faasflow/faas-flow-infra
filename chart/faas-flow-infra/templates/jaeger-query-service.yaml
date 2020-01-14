@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-query
+  labels:
+    app: jaeger
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/component: query
+spec:
+  type: {{ .Values.jaeger.serviceType }}
+  ports:
+    - name: query-http
+      port: 80
+      protocol: TCP
+      targetPort: 16686
+      {{- if contains "NodePort" .Values.jaeger.serviceType }}
+      nodePort: {{ .Values.jaeger.nodePort }}
+      {{- end }}
+  selector:
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/component: all-in-one

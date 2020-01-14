@@ -1,0 +1,33 @@
+# Default values for faas-flow-infra.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  pullPolicy: IfNotPresent
+
+minio:
+  image:
+    repository: minio/minio
+    AppVersion: RELEASE.2020-01-03T19-12-21Z
+  accessKey: minio
+  secretKey: minio123
+  resources:
+    storage: 1Gi
+  nodePort: 30900
+  serviceType: NodePort
+
+jaeger:
+  image:
+    repository: jaegertracing/all-in-one
+  nodePort: 31668
+  serviceType: NodePort
+  zipkinCollectorPort: 9411
+
+consul:
+  image:
+    repository: consul
+    AppVersion: 1.6.2
+  resources:
+    storage: 1Gi
+  nodePort: 30850
+  serviceType: NodePort

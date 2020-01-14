@@ -1,0 +1,6 @@
+OpenFaaS infra is now installed. 
+Components:
+- Minio     (DataStore backend)
+- Consul    (StateStore backend)
+- Jaeger    (Tracing backend)
+- Dashboard
