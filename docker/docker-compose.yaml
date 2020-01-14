@@ -1,0 +1,106 @@
+version: "3.3"
+
+services:
+  consul:
+    image: s8sg/consul:latest
+    labels: [app=consul]
+    ports:
+      - 8500:8500
+    networks:
+      - consul
+      - func_functions
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
+      CONSUL_BIND_INTERFACE: "eth0"
+      CONSUL: "consul"
+      CONSUL_CHECK_LEADER: "true"
+      CONSUL_HTTP_AUTH: "admin:admin"
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+      resources:
+        reservations:
+          memory: 128M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+
+  minio:
+    image: minio/minio:RELEASE.2020-01-03T19-12-21Z
+    labels: [app=minio]
+    ports:
+      - 9000:9000
+    networks:
+      - func_functions
+    environment:
+      MINIO_SECRET_KEY_FILE: 's3-secret-key'
+      MINIO_ACCESS_KEY_FILE: 's3-access-key'
+    secrets:
+      - s3-secret-key
+      - s3-access-key
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+      resources:
+        reservations:
+          memory: 128M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    command: server /export
+
+  jaegertracing:
+    image: jaegertracing/all-in-one:1.16.0
+    labels: [app=jaegertracing]
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 9411:9411
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+    networks:
+      - func_functions
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+      resources:
+        reservations:
+          memory: 128M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+secrets:
+  s3-secret-key:
+    external: true
+  s3-access-key:
+    external: true
+
+networks:
+  consul:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24
+
+  func_functions:
+    external:
+      name: func_functions

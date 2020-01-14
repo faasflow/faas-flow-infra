@@ -19,6 +19,7 @@ minio:
 jaeger:
   image:
     repository: jaegertracing/all-in-one
+    AppVersion: 1.16.0
   nodePort: 31668
   serviceType: NodePort
   zipkinCollectorPort: 9411

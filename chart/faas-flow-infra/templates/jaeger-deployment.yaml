@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: jaeger
-          image: "{{ .Values.jaeger.image.repository }}"
+          image: "{{ .Values.jaeger.image.repository }}:{{ .Values.jaeger.image.AppVersion }}"
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           env:
             - name: COLLECTOR_ZIPKIN_HTTP_PORT
