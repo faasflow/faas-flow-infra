@@ -12,9 +12,9 @@ if ! [ -x "$(command -v kubectl)" ]; then
   exit 1
 fi
 
-# Create namespace faas-flow-infra if doesn't exists
-echo "Creating Namespace (faas-flow-infra) if doesn't exist"
-[ ! "$(kubectl get namespace | grep faas-flow-infra)" ] && kubectl create namespace faas-flow-infra
+# Create namespace faasflow if doesn't exists
+echo "Creating Namespace (faasflow) if doesn't exist"
+[ ! "$(kubectl get namespace | grep faasflow)" ] && kubectl create namespace faasflow
 
 # Secrets should be created for minio access.
 echo "Attempting to create credentials for minio.."
@@ -22,9 +22,9 @@ SECRET_KEY=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
 ACCESS_KEY=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
 
 
-kubectl create secret generic -n faas-flow-infra \
+kubectl create secret generic -n faasflow \
  s3-secret-key --from-literal s3-secret-key="$SECRET_KEY"
-kubectl create secret generic -n faas-flow-infra \
+kubectl create secret generic -n faasflow \
  s3-access-key --from-literal s3-access-key="$ACCESS_KEY"
 if [ $? = 0 ];
 then
@@ -34,4 +34,4 @@ else
 fi
 
 echo "Deploying faas-flow-infra chart"
-helm install faas-flow-infra chart/faas-flow-infra --namespace faas-flow-infra --set minio.accessKey=$ACCESS_KEY,minio.secretKey=$SECRET_KEY
+helm install faas-flow-infra chart/faas-flow-infra --namespace faasflow --set minio.accessKey=$ACCESS_KEY,minio.secretKey=$SECRET_KEY
