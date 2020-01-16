@@ -8,38 +8,27 @@ Faas-Flow infra provides the **kubernets** is and swarm deployment resources for
 
 
 ### Getting Started 
-First clone the repo as
-```sh
+First clone the repo
+```bash
 git clone https://github.com/s8sg/faas-flow-infra.git
+cd faas-flow-infra
 ```
 
 #### Deploy in Kubernets
 Prerequisite 
-> [Helm](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=2ahUKEwix2vKP4oLnAhUlmuYKHfN-A0QQFjAAegQIBhAB&url=https%3A%2F%2Fhelm.sh%2Fdocs%2Fintro%2Finstall%2F&usg=AOvVaw2PPPMiKayB1EbDqpo8gPbY).  
+> [Helm](https://helm.sh/docs/intro/install/)    
+> [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)     
    
-Create a new namespace
-```
-kubectl create namespace faas-flow-infra
-```  
-    
 Deploy the Helm Chart
-```
-helm install faas-flow-infra chart/faas-flow-infra --namespace faas-flow-infra
+```bash
+./deploy_helm_chart.sh
 ```
 
 #### Deploy in Docker Swarm
 Prerequisite 
 > [Docker Swarm](https://docs.docker.com/engine/reference/commandline/swarm_init/)   
     
-Create Minio Secret and Access Key
-```
-SECRET_KEY=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
-ACCESS_KEY=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
-echo -n "$SECRET_KEY" | docker secret create s3-secret-key -
-echo -n "$ACCESS_KEY" | docker secret create s3-access-key -
-```
-  
 Deploy the Stack
-```
-docker stack deploy faass-flow-infra -f docker/docker-compose.yaml
+```bash
+./deploy_docker_stack.sh
 ```
