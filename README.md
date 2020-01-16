@@ -32,3 +32,18 @@ Deploy the Stack
 ```bash
 ./deploy_docker_stack.sh
 ```
+
+### Consuming the Services
+
+The components will be available as
+
+
+ |Item|Swarm URL|Kubernets URL|
+ |---|---|---|
+ |StateStore|`consul:8500`|`consul.faas-flow-infra:8500`|
+ |DataStore|`minio:9000`|`minio.faas-flow-infra:9000`|
+ |EventManager Agent|`jaegertracing:5775`|`jaegertracing.faas-flow-infra:5775`|
+ |EventManager Query|`jaegertracing:16686`|`jaegertracing.faas-flow-infra:16686`|
+
+
+
