@@ -24,4 +24,4 @@ else
 fi
 
 echo "Deploying faas-flow-infra stack"
-docker stack deploy --compose-file docker-compose.yml faasflow
+docker stack deploy --compose-file ./docker/docker-compose.yaml faasflow
