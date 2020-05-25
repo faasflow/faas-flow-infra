@@ -21,10 +21,9 @@ echo "Attempting to create credentials for minio.."
 SECRET_KEY=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
 ACCESS_KEY=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
 
-
-kubectl create secret generic -n faasflow \
+kubectl create secret generic -n openfaas-fn \
  s3-secret-key --from-literal s3-secret-key="$SECRET_KEY"
-kubectl create secret generic -n faasflow \
+kubectl create secret generic -n openfaas-fn \
  s3-access-key --from-literal s3-access-key="$ACCESS_KEY"
 if [ $? = 0 ];
 then
