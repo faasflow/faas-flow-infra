@@ -55,5 +55,5 @@ Once deployed components will be available as
 |---|---|---|
 |StateStore|`consul:8500`|`consul.faasflow:8500`|
 |DataStore|`minio:9000`|`minio.faasflow:9000`|
-|EventManager Agent|`jaegertracing:5775`|`jaeger.faasflow:5775`|
-|EventManager Query|`jaegertracing:16686`|`jaeger.faasflow:16686`|
+|EventManager Agent|`jaegertracing:5775`|`jaeger-agent.faasflow:5775`|
+|EventManager Query|`jaegertracing:16686`|`jaeger-query.faasflow:31668`|
