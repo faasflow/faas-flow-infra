@@ -10,7 +10,7 @@ spec:
   type: {{ .Values.jaeger.serviceType }}
   ports:
     - name: query-http
-      port: 80
+      port: 16686
       protocol: TCP
       targetPort: 16686
       {{- if contains "NodePort" .Values.jaeger.serviceType }}
